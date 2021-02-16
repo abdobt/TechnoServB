@@ -75,6 +75,7 @@ public class DemandeService {
 		System.out.println(clientMetier.findbyemail("Client@gmail.com"));
 		UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		System.out.println(principal.getUsername());
+
 		Client t=clientMetier.findbyemail(principal.getUsername());
 //		Client 
 		System.out.println(t.getVille());
@@ -102,17 +103,28 @@ public class DemandeService {
 	{ 
 		String sname=demandeRequest.getSpecialite().getName();
 			Technicien t=recherche(demandeRequest.getLattitude(), demandeRequest.getLongitude(),sname);
-			  restTemplate.postForEntity( "http://localhost:8080/websocket-backend/notify", t,String.class);
+			//demandeMetier.add(demandeRequest);
 			  JSONObject request = new JSONObject();
-			  request.put("username", "abdeslam");
-			  request.put("pass", "Boutaba");
+			  request.put("username", t.getName());
+			  request.put("phone", t.getPhone_number());
+			  request.put("email", t.getEmail());
+			  request.put("specialite", t.getSpecialite().getName());
+			  JSONObject request2 = new JSONObject();
+			  UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			  Client c=clientMetier.findbyemail(principal.getUsername());
+			  request2.put("username", c.getName());
+			  request2.put("phone", c.getPhone_num());
+			  request2.put("adresse",demandeRequest.getAdresse() );
 			  // set headers
 			  HttpHeaders headers = new HttpHeaders();
 			  headers.setContentType(MediaType.APPLICATION_JSON);
 			  HttpEntity<String> entity = new HttpEntity<String>(request.toString(), headers);
+			  HttpEntity<String> entity2 = new HttpEntity<String>(request2.toString(), headers);
 			  // send request and parse result
 			  restTemplate
-			    .exchange("http://localhost:8080/websocket-backend/notify", HttpMethod.POST, entity, String.class);
+			    .exchange("http://localhost:8080/websocket-backend/notifyclient", HttpMethod.POST, entity, String.class);
+			  restTemplate
+			    .exchange("http://localhost:8080/websocket-backend/notifytechnicien", HttpMethod.POST, entity2, String.class);
 			//res=restTemplate.postForObject("http://localhost:8080/websocket-backend/notify",t, res.getClass());
 			//System.out.println(res);
 	}

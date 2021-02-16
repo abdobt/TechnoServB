@@ -39,4 +39,11 @@ public class serv {
 		imp.update(t);
 		return "update s";
 	}
+	@GetMapping("/service1/infos")
+	public Technicien getinfos()
+	{
+		UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Technicien t=imp.findbyemail(principal.getUsername());
+		return t;
+	}
 }
