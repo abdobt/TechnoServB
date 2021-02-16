@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.entity.Client;
 import com.example.demo.entity.User;
+import com.example.demo.metier.Clientmetier;
 import com.example.demo.util.JwtUtil;
 
 
@@ -45,6 +47,19 @@ public class UserService {
         }
         return jwtUtil.generateToken(authRequest.getEmail());
     }
+	@Autowired
+	private Clientmetier clientMetier;
+	@PostMapping("/authenticate/inscription")
+	public Client saveClient(@RequestBody Client registerRequest) {
+		System.out.println("hello");
+//		registerRequest.setId((long) 15);
+		System.out.println(registerRequest.getEmail()+","+registerRequest.getPassword()+","+registerRequest.getVille());
+	return clientMetier.add(registerRequest);
+	}
+
+	
+	
+	
 	public double getDistanceFromLatLonInKm(double lat1,double lon1,double lat2,double lon2) {
 		  int R = 6371; // Radius of the earth in km
 		  double dLat = deg2rad(lat2-lat1);  // deg2rad below
