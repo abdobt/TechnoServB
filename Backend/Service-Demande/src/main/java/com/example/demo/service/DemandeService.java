@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,10 +26,14 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.entity.Client;
 import com.example.demo.entity.Demande;
+import com.example.demo.entity.RDV;
+import com.example.demo.entity.Specialite;
 import com.example.demo.entity.Technicien;
 import com.example.demo.entity.User;
 import com.example.demo.metier.Clientmetier;
 import com.example.demo.metier.Demandemetier;
+import com.example.demo.metier.RDVmetier;
+import com.example.demo.metier.Specialitemetier;
 import com.example.demo.metier.Technicienmetier;
 import com.example.demo.metier.Usermetier;
 
@@ -37,6 +42,10 @@ public class DemandeService {
 	
 	@Autowired
 	private Demandemetier demandeMetier;
+	@Autowired
+	private RDVmetier rdvMetier;
+	@Autowired
+	private Specialitemetier specialiteMetier;
 	@Autowired
 	private Technicienmetier technicienMetier;
 	@Autowired
@@ -70,7 +79,7 @@ public class DemandeService {
 		  return deg * (Math.PI/180);
 		}
 	
-	public Technicien recherche(float latitude, float longitude,String h)
+	public Technicien recherche(double latitude, double longitude,String h)
 	{
 		System.out.println(clientMetier.findbyemail("Client@gmail.com"));
 		UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -98,20 +107,33 @@ public class DemandeService {
 		return tc.get(i);
 	}
 	
-	@GetMapping("/service5/distance")
+	@PostMapping("/service5/distance")
 	public void distance(@RequestBody Demande demandeRequest) throws JSONException
 	{ 
-		String sname=demandeRequest.getSpecialite().getName();
+			UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Client c=clientMetier.findbyemail(principal.getUsername());
+			String sname=demandeRequest.getSpecialite().getName();
 			Technicien t=recherche(demandeRequest.getLattitude(), demandeRequest.getLongitude(),sname);
-			//demandeMetier.add(demandeRequest);
+			  String spec = demandeRequest.getSpecialite().getName();
+			  Specialite s = specialiteMetier.findByName(spec);
+			  demandeRequest.setSpecialite(s);
+			  demandeRequest.setClient(c);
+			  demandeRequest.setRating(0.0);
+			  demandeMetier.add(demandeRequest);
+			  RDV rdv = new RDV();
+			  rdv.setDemande(demandeRequest);
+			  rdv.setTechnicien(t);
+			  rdvMetier.add(rdv);
+			  System.out.print("----------helloooooo------------\n");
+			  System.out.print("Demande: "+ demandeRequest.getAdresse()+ demandeRequest.getSpecialite().getName());
+			  System.out.print("RDV: " + rdv.getDemande().getAdresse()+ rdv.getTechnicien().getName());
 			  JSONObject request = new JSONObject();
 			  request.put("username", t.getName());
 			  request.put("phone", t.getPhone_number());
 			  request.put("email", t.getEmail());
 			  request.put("specialite", t.getSpecialite().getName());
 			  JSONObject request2 = new JSONObject();
-			  UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			  Client c=clientMetier.findbyemail(principal.getUsername());
+			  
 			  request2.put("username", c.getName());
 			  request2.put("phone", c.getPhone_num());
 			  request2.put("adresse",demandeRequest.getAdresse() );
@@ -133,6 +155,17 @@ public class DemandeService {
 	{ 
 			
 			System.out.println(technicienMetier.findByVille("Tanger"));
+	}
+	@PostMapping("/service5/rating")
+	public void rating(@RequestBody Demande feedback)
+	{ 
+			UserDetails principal =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			Client c=clientMetier.findbyemail(principal.getUsername());
+			Demande d = c.getLdemande().get( c.getLdemande().size() - 1);
+			Double fb = feedback.getRating();
+			d.setRating(fb);
+			demandeMetier.update(d);
+			
 	}
 
 }

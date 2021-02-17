@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.example.demo.entity.Specialite;
+import com.example.demo.entity.User;
 
 public interface Specialitemetier {
 	
@@ -11,5 +12,6 @@ public interface Specialitemetier {
 	public void delete(Specialite c);
 	public Specialite update(Specialite c);
 	public List<Specialite> afficher();
+	public Specialite  findByName(String name);
 
 }

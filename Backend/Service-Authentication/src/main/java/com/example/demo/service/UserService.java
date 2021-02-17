@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.entity.User;
+import com.example.demo.metier.Clientmetier;
 import com.example.demo.util.JwtUtil;
 
 
@@ -24,6 +25,8 @@ public class UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+	private Clientmetier clientMetier;
 	@GetMapping("/authenticate/wc")
 	public String welcome()
 	{ 
@@ -45,8 +48,17 @@ public class UserService {
         }
         return jwtUtil.generateToken(authRequest.getEmail());
     }
+
 	@PostMapping("/authenticate/verify")
     public String verify() throws Exception {
 		return "verified";
+	}
+	
+	@PostMapping("/authenticate/inscription")
+	public Client saveClient(@RequestBody Client registerRequest) {
+		System.out.println("hello");
+//		registerRequest.setId((long) 15);
+		System.out.println(registerRequest.getEmail()+","+registerRequest.getPassword()+","+registerRequest.getVille());
+	return clientMetier.add(registerRequest);
 	}
 }

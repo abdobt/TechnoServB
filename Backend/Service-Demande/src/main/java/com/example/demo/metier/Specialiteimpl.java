@@ -38,4 +38,10 @@ public class Specialiteimpl implements Specialitemetier {
 		return sr.findAll();
 	}
 
+	@Override
+	public Specialite findByName(String name) {
+		// TODO Auto-generated method stub
+		return sr.findByName(name);
+	}
+
 }
