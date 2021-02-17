@@ -45,4 +45,8 @@ public class UserService {
         }
         return jwtUtil.generateToken(authRequest.getEmail());
     }
+	@PostMapping("/authenticate/verify")
+    public String verify() throws Exception {
+		return "verified";
+	}
 }

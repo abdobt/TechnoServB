@@ -122,9 +122,9 @@ public class DemandeService {
 			  HttpEntity<String> entity2 = new HttpEntity<String>(request2.toString(), headers);
 			  // send request and parse result
 			  restTemplate
-			    .exchange("http://localhost:8080/websocket-backend/notifyclient", HttpMethod.POST, entity, String.class);
+			    .exchange("http://localhost:9005/websocket/notifyclient", HttpMethod.POST, entity, String.class);
 			  restTemplate
-			    .exchange("http://localhost:8080/websocket-backend/notifytechnicien", HttpMethod.POST, entity2, String.class);
+			    .exchange("http://localhost:9005/websocket/notifytechnicien", HttpMethod.POST, entity2, String.class);
 			//res=restTemplate.postForObject("http://localhost:8080/websocket-backend/notify",t, res.getClass());
 			//System.out.println(res);
 	}
