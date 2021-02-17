@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,10 +22,40 @@ public class Demande {
 	
 	private String adresse;
 	
-	private float longitude;
+	private double longitude;
 	
-	private float lattitude;
+	private double lattitude;
 	
+	private Double rating;
+	
+
+	public Demande(Long id, String adresse, double longitude, double lattitude, Double rating, Specialite specialite,
+			Client client) {
+		super();
+		this.id = id;
+		this.adresse = adresse;
+		this.longitude = longitude;
+		this.lattitude = lattitude;
+		this.rating = rating;
+		this.specialite = specialite;
+		this.client = client;
+	}
+
+	public Double getRating() {
+		return rating;
+	}
+
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	public void setLattitude(double lattitude) {
+		this.lattitude = lattitude;
+	}
 
 	@ManyToOne
 	@JoinColumn (name="id_specialite")
@@ -38,21 +69,21 @@ public class Demande {
 	@JoinColumn (name="id_client")
 	private Client client ;
 	
-	public float getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(float longitude) {
-		this.longitude = longitude;
-	}
-
-	public float getLattitude() {
-		return lattitude;
-	}
-
-	public void setLattitude(float lattitude) {
-		this.lattitude = lattitude;
-	}
+//	public double getLongitude() {
+//		return longitude;
+//	}
+//
+//	public void setLongitude(float longitude) {
+//		this.longitude = longitude;
+//	}
+//
+//	public double getLattitude() {
+//		return lattitude;
+//	}
+//
+//	public void setLattitude(float lattitude) {
+//		this.lattitude = lattitude;
+//	}
 
 	
 	public Demande(Long id, String adresse, Specialite specialite, RDV rdv, Client client) {
@@ -62,6 +93,14 @@ public class Demande {
 		this.specialite = specialite;
 //		this.rdv = rdv;
 		this.client = client;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public double getLattitude() {
+		return lattitude;
 	}
 
 	public Specialite getSpecialite() {
