@@ -58,7 +58,7 @@ public void configure(AuthenticationManagerBuilder auth) throws Exception
     	      cors.setAllowedHeaders(List.of("*"));
     	      return cors;
     	    });*/
-        http.csrf().disable().authorizeRequests().antMatchers("/authenticate")
+        http.csrf().disable().authorizeRequests().antMatchers("/authenticate","/service1/cv")
                 .permitAll().anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;

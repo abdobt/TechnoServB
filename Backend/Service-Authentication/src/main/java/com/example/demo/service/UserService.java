@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.entity.Client;
 import com.example.demo.entity.User;
 import com.example.demo.metier.Clientmetier;
 import com.example.demo.util.JwtUtil;
@@ -27,17 +28,8 @@ public class UserService {
     private RestTemplate restTemplate;
     @Autowired
 	private Clientmetier clientMetier;
-	@GetMapping("/authenticate/wc")
-	public String welcome()
-	{ 
-		String res="";
-		res=restTemplate.getForObject("http://localhost:8080/websocket-backend/notify", res.getClass());
-		System.out.println(res);
-		return "Welcome to abdo's page";
-	}
 	@PostMapping("/authenticate")
     public String generateToken(@RequestBody User authRequest) throws Exception {
-		System.out.println("hello");
 		System.out.println(authRequest.getEmail()+","+authRequest.getPassword());
         try {
             authenticationManager.authenticate(
@@ -53,7 +45,6 @@ public class UserService {
     public String verify() throws Exception {
 		return "verified";
 	}
-	
 	@PostMapping("/authenticate/inscription")
 	public Client saveClient(@RequestBody Client registerRequest) {
 		System.out.println("hello");

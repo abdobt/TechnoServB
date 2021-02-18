@@ -16,8 +16,8 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Technicien extends User {
-private float longitude;
-private float lattitude;
+private double longitude;
+private double lattitude;
 private boolean disponible;
 private int phone_number;
 private String ville;
@@ -39,13 +39,13 @@ public Technicien() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public float getLongitude() {
+public double getLongitude() {
 	return longitude;
 }
 public void setLongitude(float longitude) {
 	this.longitude = longitude;
 }
-public float getLattitude() {
+public double getLattitude() {
 	return lattitude;
 }
 public void setLattitude(float lattitude) {
