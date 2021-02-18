@@ -142,7 +142,12 @@ public class DemandeService {
 			  headers.setContentType(MediaType.APPLICATION_JSON);
 			  HttpEntity<String> entity = new HttpEntity<String>(request.toString(), headers);
 			  HttpEntity<String> entity2 = new HttpEntity<String>(request2.toString(), headers);
-			  // send request and parse result
+			  try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			  // send request and parse result
 			  restTemplate
 			    .exchange("http://localhost:9005/websocket/notifyclient", HttpMethod.POST, entity, String.class);
 			  restTemplate
