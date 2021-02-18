@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.demo.entity.Client;
 import com.example.demo.entity.User;
 import com.example.demo.metier.Clientmetier;
 import com.example.demo.util.JwtUtil;
