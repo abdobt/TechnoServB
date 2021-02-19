@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RatingServiceService } from 'src/app/rating-service.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { RatingServiceService } from 'src/app/rating-service.service';
 })
 export class RatingComponent implements OnInit {
 
-  constructor(private service: RatingServiceService) { }
+  constructor(private service: RatingServiceService,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +23,7 @@ export class RatingComponent implements OnInit {
     // }
     let resp = this.service.updateDemande({ rating: feedback });
     resp.subscribe();
+    this.router.navigateByUrl['/'];
   }
 
 }

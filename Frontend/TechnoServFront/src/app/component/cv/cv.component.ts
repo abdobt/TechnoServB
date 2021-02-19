@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JwtclientService } from 'src/app/jwtclient.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-cv',
   templateUrl: './cv.component.html',
@@ -8,7 +9,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class CvComponent implements OnInit {
   selectedFiles: FileList;
-  constructor(private service:JwtclientService) { }
+  constructor(private service:JwtclientService,private router:Router) { }
   currentFile: File;
   progress = 0;
   ngOnInit(): void {
@@ -23,6 +24,7 @@ dp()
         this.progress = Math.round(100 * event.loaded / event.total);
       } else if (event instanceof HttpResponse) {
         alert('File Successfully Uploaded');
+        this.router.navigateByUrl['/'];
       }
     },
     err => {
