@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Acceuil</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <div style="margin-top: 20%;">
+    <ion-item>
+      <ion-label>Disponible</ion-label>
+      <ion-toggle (ionChange)="locationupdates()"></ion-toggle>
+    </ion-item>
+  </div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle></ion-card-subtitle>
+        <div style="margin-left: 30%;">
+          <img src="../../assets/map (2).png">
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p style="font-size: large;">
+         -  Si tu es disponible activer le button disponible pour qu'on puisse avoir votre localisation et  vous affecter avec des clients.<br>
+         - Si vous etes affecté à un client vous aurez ses informations.
+        </p>
+      </ion-card-content>
+    </ion-card>
+</ion-content>
