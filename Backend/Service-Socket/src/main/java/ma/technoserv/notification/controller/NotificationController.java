@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import ma.technoserv.notification.model.Notifications;
 @RestController
 public class NotificationController {
    @Autowired
    private SimpMessagingTemplate template;
-   private Notifications notifications = new Notifications(0);
     @PostMapping("/notifyclient")
     public String sendtoclient(@RequestBody Object te) throws Exception {
        template.convertAndSend("/topic/notification",te);
