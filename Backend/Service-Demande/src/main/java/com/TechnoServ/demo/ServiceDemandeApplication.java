@@ -1,22 +1,14 @@
-package com.technoserv.demo;
-
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+package com.TechnoServ.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableEurekaClient
-public class Serv2Application {
-
+public class ServiceDemandeApplication {
 	public static void main(String[] args) {
-
-		SpringApplication.run(Serv2Application.class, args);
+		SpringApplication.run(ServiceDemandeApplication.class, args);
 	}
 	@Bean
 	public RestTemplate restTemplate(){
